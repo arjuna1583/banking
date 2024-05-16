@@ -1,4 +1,8 @@
 const MyBanks = () => {
-  return <div>MyBanks</div>
+  return (
+    <section>
+      <div>MyBanks</div>
+    </section>
+  )
 }
 export default MyBanks
