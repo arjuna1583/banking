@@ -1,9 +1,12 @@
 import Image from "next/image"
 import Link from "next/link"
 import BankCard from "./BankCard"
+import { countTransactionCategories } from "@/lib/utils"
+import Category from "./Category"
 
 const RightSidebar = ({ user, transactions, banks }: RightSidebarProps) => {
-  console.log(user)
+  const categories: CategoryCount[] = countTransactionCategories(transactions)
+  console.log(categories)
 
   return (
     <aside className='right-sidebar'>
@@ -12,11 +15,11 @@ const RightSidebar = ({ user, transactions, banks }: RightSidebarProps) => {
         <div className='profile'>
           <div className='profile-img'>
             <span className='text-5xl font-bold text-blue-500'>
-              {user?.name[0]}
+              {user?.firstName[0]}
             </span>
           </div>
           <div className='profile-details'>
-            <h1 className='profile-name'>{user?.name}</h1>
+            <h1 className='profile-name'>{user?.firstName}</h1>
             <p className='profile-email'>{user?.email}</p>
           </div>
         </div>
@@ -36,7 +39,7 @@ const RightSidebar = ({ user, transactions, banks }: RightSidebarProps) => {
               <BankCard
                 key={banks[0].$id}
                 account={banks[0]}
-                userName={user?.name}
+                userName={`${user.firstName} ${user.lastName}`}
                 showBalance={false}
               />
             </div>
@@ -45,13 +48,22 @@ const RightSidebar = ({ user, transactions, banks }: RightSidebarProps) => {
                 <BankCard
                   key={banks[1].$id}
                   account={banks[1]}
-                  userName={user?.name}
+                  userName={`${user.firstName} ${user.lastName}`}
                   showBalance={false}
                 />
               </div>
             )}
           </div>
         )}
+        <div className='mt-10 flex flex-1 flex-col gap-6'>
+          <h2 className='header-2'>Top categories</h2>
+
+          <div className='space-y-5'>
+            {categories.map((category, index) => (
+              <Category key={category.name} category={category} />
+            ))}
+          </div>
+        </div>
       </section>
     </aside>
   )
