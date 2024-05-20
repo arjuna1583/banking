@@ -5,7 +5,7 @@ import { getLoggedInUser } from "@/lib/actions/user.actions"
 
 const Transfer = async () => {
   const loggedIn = await getLoggedInUser()
-  const accounts = await getAccounts({ userId: loggedIn?.$id })
+  const accounts = await getAccounts({ userId: loggedIn.$id })
 
   if (!accounts) return
   const accountsData = accounts?.data
